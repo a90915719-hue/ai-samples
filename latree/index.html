@@ -191,6 +191,7 @@
   @keyframes sayIn{from{opacity:0;transform:translateY(-5px)}to{opacity:1;transform:none}}
   .say-body{
     max-height:126px;overflow-y:auto;-webkit-overflow-scrolling:touch;
+    scrollbar-width:thin;
     font-size:13.5px;line-height:1.62;letter-spacing:-.2px;color:#55555d;word-break:keep-all;
   }
   .say-body p{margin:0 0 5px}
@@ -610,7 +611,8 @@
   }
 
   function ensureChromeChip(){
-    if(!isAndroid || !intentUrl || chromeChip) return;
+    if(!isAndroid || !intentUrl) return;
+    if(chromeChip && chromeChip.parentNode) return;   // 이미 떠 있으면 그대로
     var replay = bubblesEl ? bubblesEl.querySelector('.bubble-row .bubble .replay') : null;
     if(!replay || !replay.parentNode) return;
     var b = document.createElement('button');
