@@ -88,7 +88,10 @@
     transition:transform .12s ease, box-shadow .12s ease;
   }
   .btn-listen:active{transform:scale(.985);box-shadow:0 4px 12px rgba(0,0,0,.16)}
-  .btn-listen.speaking{background:linear-gradient(135deg,#3a3a40,#5a5a62)}
+  .btn-listen.speaking{
+    background:#fff;color:var(--accent);
+    box-shadow:inset 0 0 0 2px #4a4437,0 4px 14px rgba(0,0,0,.08);
+  }
   .hint{margin:9px 0 0;font-size:12px;color:var(--sub);letter-spacing:-.1px}
   .qa{margin-top:26px}
   .qa h2{
