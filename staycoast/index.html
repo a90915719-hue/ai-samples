@@ -139,7 +139,7 @@
   .avatar-stage{position:relative;display:flex;justify-content:center;align-items:center;width:100%}
   .halo{
     position:absolute;left:50%;top:50%;width:236px;height:236px;margin:-118px 0 0 -118px;
-    border-radius:50%;opacity:.75;transition:opacity .35s ease;
+    border-radius:50%;opacity:.75;transition:opacity .35s ease;pointer-events:none;
     background:radial-gradient(circle,#3f8a7652 0%,#3f8a761c 46%,transparent 72%);
   }
   .avatar-frame{
@@ -219,6 +219,24 @@
   }
   footer .price.manage-price b{color:var(--accent2)}
   footer .finem{font-size:11.5px;line-height:1.65;color:var(--sub);margin-top:12px;letter-spacing:-.1px}
+  /* ── 사장님 → 제작자 바로 연락 버튼 ── */
+  .contact{
+    margin:15px 0 6px;padding:15px 13px 13px;border-radius:16px;text-align:left;
+    background:#fff;border:1.5px solid var(--accent2);box-shadow:0 3px 12px rgba(0,0,0,.05);
+    display:grid;gap:8px;
+  }
+  .contact .ct{font-size:12.6px;font-weight:800;color:var(--accent);letter-spacing:-.2px;margin:0 0 1px;text-align:center}
+  .cbtn{
+    display:flex;align-items:center;justify-content:center;gap:7px;width:100%;
+    font-family:inherit;font-size:15px;font-weight:800;letter-spacing:-.3px;
+    border-radius:12px;padding:13px 12px;cursor:pointer;border:0;text-decoration:none;
+    transition:transform .12s ease;
+  }
+  .cbtn:active{transform:scale(.985)}
+  .cbtn.callc{background:var(--accent);color:#fff;box-shadow:0 6px 16px rgba(0,0,0,.15)}
+  .cbtn.smsc{background:#fff;color:var(--accent);border:1.5px solid var(--accent2)}
+  .cbtn.copyc{background:var(--bg);color:var(--accent);border:1px solid rgba(0,0,0,.12)}
+  .contact .cnote{margin:1px 0 0;text-align:center;font-size:11.6px;color:var(--sub);letter-spacing:-.1px;line-height:1.5}
   .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
   @media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
 </style>
@@ -295,6 +313,13 @@
     <p class="made">2027년형 말하는 웹사이트 AI 비서 샘플 · 제작 문의: 1인기업 양철배 (010-9091-5719)</p>
     <p class="price">업종·규모별 맞춤 견적 · 기존 홈페이지에 AI 비서 추가 / 새 홈페이지+AI 비서 모두 상담 가능 · 서버·AI 사용료 0원</p>
     <p class="price manage-price">🧰 업종·규모별 맞춤 견적 · 초기 부담 없는 월 관리형 상담 가능<br><b>(사진·요금·공지 관리 포함)</b></p>
+    <div class="contact">
+      <p class="ct">제작자 양철배 대표에게 바로 연락하기</p>
+      <a class="cbtn callc" href="tel:01090915719">📞 제작 문의 전화</a>
+      <a class="cbtn smsc" href="sms:01090915719">💬 문자 보내기</a>
+      <button class="cbtn copyc" id="copyBtn" type="button">💬 번호 복사해 카톡 문의</button>
+      <p class="cnote" id="copyNote">010-9091-5719 · 복사한 뒤 카카오톡에서 붙여넣기</p>
+    </div>
     <p class="finem">비서 캐릭터·목소리·말투(친절한 여성 비서, 차분한 남성 비서 등)도 사장님이 원하시는 스타일로 맞춤 제작해 드립니다.<br>이 페이지는 스테이코스트 사장님께 보여 드리기 위한 샘플이며, 검색에 노출되지 않도록 설정되어 있습니다.<br>실제 홈페이지에는 사장님 사진과 객실 사진을 넣어 드립니다.</p>
   </footer>
 
@@ -322,9 +347,11 @@
   var queue = [], qIndex = 0;   // 문장 단위 재생 큐
   var gapTimer = null, startTimer = null, watchdog = null, lastProgress = 0;
   var chunkStarted = false, chunkMax = 0;   // 진행이 멈췄는지 판단하는 데 쓴다
+  var audioSeen = false, speakStartAt = 0;  // 이 브라우저에서 실제로 소리가 났는지
   var MOUTH_MIN = 260, MOUTH_MAX = 380;   // 입을 여닫는 간격(ms)
   var IDLE_TEXT = '지금은 쉽니다 · 버튼을 누르면 말씀드려요';
   var TALK_TEXT = '상냥하게 말씀드리는 중…';
+  var VOICE_FAIL_TEXT = '이 브라우저에서는 소리가 나지 않아요 · 글로 안내해 드립니다';
 
   function pickVoice(){
     if(!synth || !synth.getVoices) return;
@@ -420,6 +447,8 @@
   function watchSpeech(token){
     if(token !== speechToken || !speaking) return;
     var now = Date.now();
+    // 소리가 전혀 나지 않는 브라우저(앱 안 브라우저·음성 차단 등): 시각 반응만 보여 준다
+    if(!audioSeen && now - speakStartAt > 2600 && !(synth && synth.speaking)){ visualOnly(3200, VOICE_FAIL_TEXT); return; }
     if(gapTimer){ lastProgress = now; return; }
     if(synth && synth.speaking){ lastProgress = now; return; }
     // 소리가 아직 시작되지 않았다: 잠시 기다렸다가 다음 문장으로
@@ -433,6 +462,25 @@
       stopMouth();
       speakChunk(token);
     }
+  }
+
+  /* 소리를 낼 수 없을 때: 입 모양·상태 문구로 반응을 보여 주고 조용히 끝낸다 */
+  function visualOnly(ms, msg){
+    speechToken++;
+    var token = speechToken;
+    clearTimers();
+    queue = []; qIndex = 0;
+    if(synth){ try{ synth.cancel(); }catch(e){} }
+    speaking = true;
+    if(listenBtn){ listenBtn.classList.add('speaking'); listenBtn.textContent = '⏹ 그만 듣기'; }
+    if(cardEl){ cardEl.classList.add('speaking'); }
+    if(statusEl){ statusEl.textContent = msg; }
+    startMouth();
+    gapTimer = setTimeout(function(){
+      gapTimer = null;
+      if(token !== speechToken) return;
+      stopSpeech();
+    }, ms);
   }
 
   function finishSpeech(){
@@ -489,8 +537,8 @@
       startMouth();
     }
 
-    u.onstart = startNow;
-    u.onboundary = startNow;
+    u.onstart = function(){ audioSeen = true; startNow(); };
+    u.onboundary = function(){ audioSeen = true; startNow(); };
     u.onend = function(){
       if(token !== speechToken) return;
       ended = true;
@@ -524,13 +572,15 @@
   }
 
   function speak(text){
-    if(!synth){ alert('이 브라우저에서는 음성 안내를 지원하지 않습니다. 휴대폰 기본 브라우저(크롬·사파리)에서 열어 주세요.'); return; }
+    if(!synth){ visualOnly(2800, VOICE_FAIL_TEXT); return; }
     pickVoice();
     speechToken++;
     var token = speechToken;
     clearTimers();
     speaking = false;
     talking = false;
+    audioSeen = false;
+    speakStartAt = Date.now();
     setMouth(false);
     if(cardEl){ cardEl.classList.remove('speaking'); }
     if(listenBtn){ listenBtn.classList.remove('speaking'); listenBtn.textContent = '🔊 음성 안내 듣기'; }
@@ -538,12 +588,55 @@
     try{ synth.cancel(); }catch(e){}
     queue = splitChunks(text);
     qIndex = 0;
-    if(!queue.length) return;
+    if(!queue.length){ visualOnly(2000, VOICE_FAIL_TEXT); return; }
     beginPlaying();
     setTimeout(function(){
       if(token === speechToken){ speakChunk(token); }
     }, 60);
   }
+
+  /* ── 제작자 번호 복사 (카톡 문의) ── */
+  var copyBtn = document.getElementById('copyBtn');
+  var copyNote = document.getElementById('copyNote');
+  var TEL_COPY = '010-9091-5719';
+
+  function noteCopied(ok){
+    if(copyNote){
+      copyNote.textContent = ok ? '번호를 복사했어요 · 카카오톡에서 붙여넣기' : ('번호: ' + TEL_COPY + ' · 길게 눌러 복사해 주세요');
+    }
+    if(copyBtn){
+      copyBtn.textContent = ok ? '✅ 번호 복사 완료' : '💬 번호 복사해 카톡 문의';
+      if(ok){ setTimeout(function(){ copyBtn.textContent = '💬 번호 복사해 카톡 문의'; }, 4000); }
+    }
+  }
+
+  function legacyCopy(done){
+    var ta = document.createElement('textarea');
+    ta.value = TEL_COPY;
+    ta.setAttribute('readonly', '');
+    ta.style.position = 'fixed';
+    ta.style.top = '-1000px';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    var ok = false;
+    try{
+      ta.select();
+      ta.setSelectionRange(0, ta.value.length);
+      ok = document.execCommand('copy');
+    }catch(e){ ok = false; }
+    if(ta.parentNode){ ta.parentNode.removeChild(ta); }
+    done(ok);
+  }
+
+  function copyNumber(){
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(TEL_COPY).then(function(){ noteCopied(true); }, function(){ legacyCopy(noteCopied); });
+    } else {
+      legacyCopy(noteCopied);
+    }
+  }
+
+  if(copyBtn){ copyBtn.addEventListener('click', copyNumber); }
 
   if(listenBtn){
     listenBtn.addEventListener('click', function(){
@@ -599,7 +692,7 @@
     replay.addEventListener('click', function(){ speak(a); });
     abBubble.appendChild(replay);
     ab.scrollIntoView({behavior:'smooth', block:'center'});
-    speak(a);
+    try{ speak(a); }catch(e){ visualOnly(2600, VOICE_FAIL_TEXT); }
   }
 
   for(var i=0;i<QA.length;i++){
