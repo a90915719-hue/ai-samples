@@ -233,10 +233,13 @@
     transition:transform .12s ease;
   }
   .cbtn:active{transform:scale(.985)}
+  .cbtn.kakaoc{background:#FEE500;color:#3C1E1E;box-shadow:0 6px 16px rgba(0,0,0,.13)}
   .cbtn.callc{background:var(--accent);color:#fff;box-shadow:0 6px 16px rgba(0,0,0,.15)}
   .cbtn.smsc{background:#fff;color:var(--accent);border:1.5px solid var(--accent2)}
-  .cbtn.copyc{background:var(--bg);color:var(--accent);border:1px solid rgba(0,0,0,.12)}
+  .cbtn.copyc{background:var(--bg);color:var(--accent);border:1px solid rgba(0,0,0,.12);font-size:13.6px;padding:11px 12px}
   .contact .cnote{margin:1px 0 0;text-align:center;font-size:11.6px;color:var(--sub);letter-spacing:-.1px;line-height:1.5}
+  .contact .cnote b{color:var(--ink);letter-spacing:.02em}
+  .contact .kakao-id{margin:-4px 0 2px;font-size:12px;font-weight:700;color:#6b5b00}
   .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
   @media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
 </style>
@@ -269,7 +272,7 @@
         <span id="statusText">지금은 쉽니다 · 버튼을 누르면 말씀드려요</span>
       </div>
       <button class="btn-listen" id="listenBtn" type="button">🔊 음성 안내 듣기</button>
-      <p class="hint">버튼을 누를 때만 소리가 나옵니다 · 약 20초</p>
+      <p class="hint">버튼을 누를 때만 소리가 나옵니다 · 약 30~40초</p>
     </div>
   </section>
 
@@ -315,6 +318,8 @@
     <p class="price manage-price">🧰 업종·규모별 맞춤 견적 · 초기 부담 없는 월 관리형 상담 가능<br><b>(사진·요금·공지 관리 포함)</b></p>
     <div class="contact">
       <p class="ct">제작자 양철배 대표에게 바로 연락하기</p>
+      <a class="cbtn kakaoc" href="https://qr.kakao.com/talk/i5Owia7P_L48dp7IxoxgLOu_SuE-" target="_blank" rel="noopener">🟡 카카오톡 문의</a>
+      <p class="cnote kakao-id">카톡 ID: <b>yang3919</b></p>
       <a class="cbtn callc" href="tel:01090915719">📞 제작 문의 전화</a>
       <a class="cbtn smsc" href="sms:01090915719">💬 문자 보내기</a>
       <button class="cbtn copyc" id="copyBtn" type="button">💬 번호 복사해 카톡 문의</button>
