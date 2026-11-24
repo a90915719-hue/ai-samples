@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="1인기업 양철배의 2027년형 웹사이트 AI 비서 통합 전시장 · 실제 제작 사례 4종을 직접 체험해 보세요.">
+<title>2027년형 웹사이트 AI 비서 통합 전시장 | 1인기업 양철배</title>
+<link rel="preload" as="image" href="../assistant.png">
+<link rel="preload" as="image" href="../assistant-talk.png">
+<style>
+  :root{
+    --gold:#e5b25c;
+    --gold2:#f3ce8b;
+    --night:#111823;
+    --night2:#1d2839;
+    --bg:#f3f0e9;
+    --ink:#171a20;
+    --sub:#6d7077;
+    --line:rgba(0,0,0,.09);
+    --card:#ffffff;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Pretendard","Malgun Gothic","Noto Sans KR",sans-serif;
+    font-size:16px;line-height:1.62;
+    -webkit-text-size-adjust:100%;
+  }
+  .wrap{max-width:430px;margin:0 auto;background:var(--bg);padding-bottom:calc(26px + env(safe-area-inset-bottom));overflow:hidden}
+  /* ── 상단 전시장 간판 ── */
+  .hero{
+    position:relative;overflow:hidden;
+    padding:24px 20px 54px;color:#fff;
+    background:
+      radial-gradient(120% 90% at 88% 4%, #e5b25c3d 0%, transparent 58%),
+      radial-gradient(90% 70% at 4% 102%, #4b6ea836 0%, transparent 62%),
+      linear-gradient(162deg, var(--night) 0%, #17202e 55%, var(--night2) 100%);
+  }
+  .hero:after{
+    content:"";position:absolute;left:0;right:0;bottom:-2px;height:18px;
+    background:var(--bg);border-radius:20px 20px 0 0;
+  }
+  .hero .kicker{
+    display:flex;align-items:center;gap:7px;
+    font-size:11.4px;font-weight:800;letter-spacing:.06em;color:var(--gold2);
+    text-transform:uppercase;margin:0 0 12px;
+  }
+  .hero .kicker:before{content:"";width:22px;height:1px;background:var(--gold);opacity:.8}
+  .hero h1{
+    margin:0 0 6px;font-size:25px;line-height:1.3;letter-spacing:-.7px;font-weight:900;
+    color:#fff;word-break:keep-all;
+  }
+  .hero h1 em{font-style:normal;color:var(--gold2)}
+  .hero .byline{
+    margin:0 0 17px;font-size:12.6px;letter-spacing:-.1px;color:rgba(255,255,255,.72);
+  }
+  .hero .hook{
+    margin:0;padding:14px 14px 13px;border-radius:14px;
+    background:rgba(255,255,255,.07);border:1px solid rgba(229,178,92,.38);
+    font-size:14.2px;line-height:1.7;letter-spacing:-.35px;color:#f6f2e8;font-weight:700;
+    word-break:keep-all;
+  }
+  .hero .hook b{color:var(--gold2);font-weight:900}
+  .hero .hook span{display:block;margin-top:9px;padding-top:9px;border-top:1px solid rgba(255,255,255,.16);font-size:13.2px;font-weight:600;color:rgba(255,255,255,.86);letter-spacing:-.3px}
+  .hero .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+  .hero .chips span{
+    font-size:11.8px;padding:5px 10px;border-radius:999px;color:#f0eadc;
+    background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);
+  }
+  /* ── 큰 AI 비서 카드 ── */
+  .voice{margin:-38px 0 0;position:relative;z-index:2;text-align:center;padding:0 14px}
+  .assistant-card{
+    position:relative;margin:0;padding:22px 16px 16px;
+    background:linear-gradient(180deg,#ffffff 0%,#fbfaf7 100%);
+    border:1px solid rgba(0,0,0,.07);border-radius:28px;
+    box-shadow:0 16px 34px rgba(14,22,34,.20),0 2px 6px rgba(0,0,0,.04);
+    display:flex;flex-direction:column;align-items:center;gap:12px;
+    overflow:hidden;
+  }
+  .assistant-card:before{
+    content:"";position:absolute;left:0;right:0;top:0;height:110px;pointer-events:none;
+    background:linear-gradient(180deg,#e5b25c1f 0%,transparent 100%);
+  }
+  .avatar-stage{position:relative;display:flex;justify-content:center;align-items:center;width:100%}
+  .halo{
+    position:absolute;left:50%;top:50%;width:236px;height:236px;margin:-118px 0 0 -118px;
+    border-radius:50%;opacity:.7;transition:opacity .35s ease;pointer-events:none;
+    background:radial-gradient(circle,#e5b25c52 0%,#e5b25c1c 46%,transparent 72%);
+  }
+  .avatar-frame{
+    position:relative;width:196px;height:196px;border-radius:46px;overflow:hidden;
+    background:#e9ebec;transform-origin:50% 88%;
+    box-shadow:0 10px 26px rgba(12,20,32,.22),0 0 0 6px #fff,0 0 0 7px rgba(229,178,92,.35);
+    animation:breathe 6.5s ease-in-out infinite;
+    transition:box-shadow .35s ease;
+  }
+  .frame-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;transition:opacity .18s ease-in-out}
+  .frame-img.talk{opacity:0}
+  .avatar-frame.mouth-open .frame-img.talk{opacity:1}
+  .ripple{
+    position:absolute;left:50%;top:50%;width:196px;height:196px;margin:-98px 0 0 -98px;
+    border-radius:46px;border:2px solid #e5b25c80;opacity:0;pointer-events:none;
+  }
+  .speaking .avatar-frame{
+    animation:talkbob 1.15s ease-in-out infinite;
+    box-shadow:0 0 0 6px #fff,0 0 0 7px #e5b25c59,0 12px 30px rgba(12,20,32,.26),0 0 24px #e5b25c3d;
+  }
+  .speaking .halo{opacity:1;animation:halopulse 1.9s ease-in-out infinite}
+  .speaking .ripple{animation:ripple 2.1s ease-out infinite}
+  @keyframes breathe{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-4px) scale(1.014)}}
+  @keyframes talkbob{0%,100%{transform:translateY(-1px) scale(1.006)}50%{transform:translateY(-5px) scale(1.026)}}
+  @keyframes halopulse{0%,100%{opacity:.5;transform:scale(.96)}50%{opacity:.92;transform:scale(1.06)}}
+  @keyframes ripple{0%{opacity:.5;transform:scale(1)}70%,100%{opacity:0;transform:scale(1.16)}}
+  .assistant-tx{display:flex;flex-direction:column;align-items:center;gap:3px;line-height:1.35;position:relative}
+  .assistant-tx b{font-size:15.5px;letter-spacing:-.35px;color:var(--ink);font-weight:900}
+  .assistant-tx span{font-size:12.4px;color:var(--sub);letter-spacing:-.2px;display:inline-flex;align-items:center;gap:6px;text-align:center}
+  .assistant-tx span:before{content:"";width:6px;height:6px;border-radius:50%;background:#c3c0b8;flex:0 0 auto;transition:background .3s ease}
+  .speaking .assistant-tx span:before{background:var(--gold);animation:dot 1.05s ease-in-out infinite}
+  @keyframes dot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.35;transform:scale(.8)}}
+  .btn-listen{
+    width:100%;border:0;border-radius:16px;padding:19px 16px;position:relative;
+    font-size:18.5px;font-weight:900;letter-spacing:-.4px;color:#2a1f0c;
+    background:linear-gradient(135deg,var(--gold2) 0%,var(--gold) 100%);
+    box-shadow:0 8px 20px rgba(160,116,40,.28);
+    font-family:inherit;cursor:pointer;
+    transition:transform .12s ease, box-shadow .12s ease;
+  }
+  .btn-listen:active{transform:scale(.985);box-shadow:0 4px 12px rgba(160,116,40,.26)}
+  .btn-listen.speaking{
+    background:#fff;color:#a97c26;
+    box-shadow:inset 0 0 0 2px var(--gold),0 4px 14px rgba(0,0,0,.08);
+  }
+  .hint{margin:0;font-size:12px;color:var(--sub);letter-spacing:-.1px;position:relative;text-align:center;line-height:1.55}
+  /* ── 섹션 공통 ── */
+  .sec{padding:0 18px}
+  .sec-head{margin:30px 0 12px}
+  .sec-head .eb{font-size:11.4px;font-weight:900;letter-spacing:.08em;color:#b5873a;margin:0 0 5px}
+  .sec-head h2{margin:0;font-size:20px;letter-spacing:-.6px;font-weight:900;display:flex;align-items:baseline;gap:7px;flex-wrap:wrap}
+  .sec-head h2 .cnt{font-size:12.4px;font-weight:800;color:#a97c26;background:#f6ecd7;border:1px solid #e8d6ae;border-radius:999px;padding:2px 9px;letter-spacing:0}
+  .sec-head p.desc{margin:7px 0 0;font-size:13.2px;line-height:1.65;color:#5c5f66;letter-spacing:-.25px;word-break:keep-all}
+  /* ── 전시품 카드 ── */
+  .grid{display:grid;gap:11px}
+  a.exhibit{
+    display:block;position:relative;text-decoration:none;color:inherit;
+    background:var(--card);border-radius:18px;padding:16px 16px 14px;
+    border:1px solid rgba(0,0,0,.075);
+    box-shadow:0 3px 14px rgba(16,24,36,.07);
+    transition:transform .12s ease,border-color .12s ease,box-shadow .12s ease;
+    overflow:hidden;
+  }
+  a.exhibit:active{transform:scale(.99);border-color:var(--gold);box-shadow:0 2px 10px rgba(16,24,36,.09)}
+  a.exhibit:before{
+    content:"";position:absolute;left:0;top:0;bottom:0;width:4px;
+    background:linear-gradient(180deg,var(--gold2),var(--gold));
+  }
+  .ex-top{display:flex;align-items:flex-start;gap:10px}
+  .ex-no{
+    flex:0 0 auto;width:28px;height:28px;border-radius:9px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:14px;font-weight:900;color:#3a2c11;
+    background:linear-gradient(180deg,#f7e3bb,#eccb8e);border:1px solid #e2c288;
+  }
+  .ex-title{flex:1 1 auto;min-width:0}
+  .ex-title b{display:block;font-size:16.4px;letter-spacing:-.45px;line-height:1.35;font-weight:900;word-break:keep-all}
+  .ex-title span{display:block;margin-top:3px;font-size:12.4px;color:#6d7077;letter-spacing:-.2px;line-height:1.5;word-break:keep-all}
+  .ex-go{
+    flex:0 0 auto;font-size:11.6px;font-weight:900;color:#8a6320;white-space:nowrap;
+    background:#f9efdb;border:1px solid #eeddb9;border-radius:999px;padding:5px 8px;letter-spacing:-.2px;
+  }
+  .ex-chips{display:flex;flex-wrap:wrap;gap:5px;margin:11px 0 0}
+  .ex-chips span{
+    font-size:11.4px;color:#4c4f56;background:#f5f3ee;border:1px solid rgba(0,0,0,.06);
+    border-radius:8px;padding:4px 7px;letter-spacing:-.2px;line-height:1.45;
+  }
+  .ex-foot{
+    margin:11px 0 0;padding-top:9px;border-top:1px dashed rgba(0,0,0,.1);
+    font-size:11.8px;color:#7d8087;letter-spacing:-.15px;display:flex;align-items:center;gap:5px;flex-wrap:wrap;
+  }
+  .ex-foot b{color:#8a6320;font-weight:800}
+  .note{
+    margin:11px 0 0;font-size:11.8px;line-height:1.6;color:#74777e;letter-spacing:-.15px;
+    text-align:center;word-break:keep-all;
+  }
+  /* ── 장점 ── */
+  .pitch{display:grid;gap:9px;margin-top:4px}
+  .pitch .row{
+    display:flex;gap:11px;align-items:flex-start;background:var(--card);border-radius:14px;padding:13px 14px;
+    border:1px solid rgba(0,0,0,.06);
+  }
+  .pitch .ico{font-size:17px;line-height:1.4;flex:0 0 auto}
+  .pitch .tx{font-size:13.4px;line-height:1.62;letter-spacing:-.25px;color:#3d4046;word-break:keep-all}
+  .pitch .tx b{color:var(--ink);font-weight:900}
+  .pitch .row.manage{border:1.5px solid #e5b25c;background:linear-gradient(180deg,#fffdf8 0%,#faf5e9 100%)}
+  .pitch .row.manage .tx b{color:#8a6320}
+  /* ── 문의 ── */
+  .contact-sec{margin-top:26px}
+  .contact{
+    padding:16px 14px 14px;border-radius:18px;
+    background:#fffdf8;border:1.5px solid #e5b25c;
+    box-shadow:0 6px 18px rgba(140,100,30,.1);
+    display:grid;gap:8px;
+  }
+  .contact .ct{
+    margin:0 0 1px;text-align:center;font-size:14.6px;font-weight:900;letter-spacing:-.35px;color:#2a2418;
+  }
+  .contact .cs{margin:-3px 0 3px;text-align:center;font-size:12.4px;line-height:1.6;color:#6c6250;letter-spacing:-.2px;word-break:keep-all}
+  .contact .cs b{color:#8a6320}
+  .cbtn{
+    display:flex;align-items:center;justify-content:center;gap:7px;width:100%;
+    font-family:inherit;font-size:15.2px;font-weight:900;letter-spacing:-.3px;
+    border-radius:13px;padding:14px 12px;cursor:pointer;border:0;text-decoration:none;
+    transition:transform .12s ease;
+  }
+  .cbtn:active{transform:scale(.985)}
+  .cbtn.kakaoc{background:#FEE500;color:#3C1E1E;box-shadow:0 6px 16px rgba(0,0,0,.13)}
+  .cbtn.callc{background:linear-gradient(135deg,#263244,#161d28);color:#fff;box-shadow:0 6px 16px rgba(0,0,0,.18)}
+  .cbtn.smsc{background:#fff;color:#4a4436;border:1.5px solid #d9cdb4}
+  .contact .kakao-id{margin:0;text-align:center;font-size:12px;font-weight:800;color:#6b5b00;letter-spacing:-.1px}
+  .contact .kakao-id b{letter-spacing:.02em}
+  .contact .kakao-fallback{
+    margin:0;padding:9px 10px;border-radius:10px;background:#fff8d6;border:1px solid #efd24a;
+    color:#5b4700;font-size:11.8px;font-weight:700;line-height:1.55;letter-spacing:-.15px;word-break:keep-all;
+  }
+  .contact .kakao-fallback[hidden]{display:none}
+  footer{margin-top:26px;padding:18px 18px 4px;border-top:1px solid var(--line);text-align:center}
+  footer .made{font-size:12.8px;font-weight:900;color:var(--ink);letter-spacing:-.25px;line-height:1.65}
+  footer .made span{display:block;margin-top:2px;font-size:11.8px;font-weight:700;color:var(--sub);letter-spacing:0}
+  footer .finem{font-size:11.2px;line-height:1.7;color:#8a8d93;margin:11px 0 0;letter-spacing:-.1px;word-break:keep-all}
+  .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+  @media (max-width:360px){
+    .hero h1{font-size:22.5px}
+    .avatar-frame,.ripple{width:170px;height:170px}
+    .halo{width:206px;height:206px;margin:-103px 0 0 -103px}
+  }
+  @media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <p class="kicker">2027년형 · AI 전시장</p>
+    <h1>말하는 <em>웹사이트 AI 비서</em><br>통합 전시장</h1>
+    <p class="byline">1인기업 양철배 · 실제로 만든 사이트만 모았습니다</p>
+    <p class="hook">
+      “아직도 밋밋한 사이트로 장사 잘 되기를 기다리고 계십니까? <b>세월의 흐름에 올라타세요!</b>”
+      <span>사장님 업종에 딱 맞는 웹사이트 AI 비서를 만들어 드립니다 (목소리·성별·말투 맞춤 + 홈페이지 관리 포함)</span>
+    </p>
+    <div class="chips"><span>목소리·성별·말투 맞춤</span><span>서버·AI 사용료 0원</span><span>홈페이지 관리 포함</span></div>
+  </header>
+
+  <section class="voice">
+    <div class="assistant-card" id="assistantCard">
+      <div class="avatar-stage">
+        <span class="halo" aria-hidden="true"></span>
+        <div class="avatar-frame" id="avatarFrame">
+          <img class="frame-img base" src="../assistant.png" alt="웹사이트 AI 비서 프로필" width="480" height="480" fetchpriority="high">
+          <img class="frame-img talk" src="../assistant-talk.png" alt="" aria-hidden="true" width="480" height="480">
+        </div>
+        <span class="ripple" aria-hidden="true"></span>
+      </div>
+      <div class="assistant-tx">
+        <b>AI 비서</b>
+        <span id="statusText">지금은 쉽니다 · 버튼을 누르면 말씀드려요</span>
+      </div>
+      <button class="btn-listen" id="listenBtn" type="button">🔊 전시장 안내 듣기</button>
+      <p class="hint">버튼을 누를 때만 소리가 나옵니다 · 사례 4종 안내 약 1분</p>
+    </div>
+  </section>
+
+  <div class="sec">
+    <div class="sec-head">
+      <p class="eb">EXHIBITION · 실제 제작 사례</p>
+      <h2>진열장 <span class="cnt">4종</span></h2>
+      <p class="desc">카드를 누르면 <b>새 탭</b>에서 그 사이트가 열립니다. AI 비서에게 직접 말을 걸어 보세요.</p>
+    </div>
+
+    <div class="grid">
+
+      <a class="exhibit" href="https://a90915719-hue.github.io/cheonan-macgyver/" target="_blank" rel="noopener">
+        <div class="ex-top">
+          <span class="ex-no">1</span>
+          <div class="ex-title">
+            <b>천안 맥가이버 마스터</b>
+            <span>집수리·에폭시·방수 + 보험 청구 안내 AI 비서</span>
+          </div>
+          <span class="ex-go">체험 ↗</span>
+        </div>
+        <div class="ex-chips"><span>공장·물류창고 고강도 바닥</span><span>상가 메탈릭 마블</span><span>욕실 방수·싱크대 코팅</span><span>사진 1장 5분 견적</span></div>
+        <p class="ex-foot">📍 충남 천안·아산·충북 · <b>현장에서 바로 쓰는 안내 비서</b></p>
+      </a>
+
+      <a class="exhibit" href="https://cheonan-yeoumeori-hair.netlify.app/" target="_blank" rel="noopener">
+        <div class="ex-top">
+          <span class="ex-no">2</span>
+          <div class="ex-title">
+            <b>여우머리 헤어샵</b>
+            <span>천안 성정동 미용실 · 스타일·예약 안내 AI 비서</span>
+          </div>
+          <span class="ex-go">체험 ↗</span>
+        </div>
+        <div class="ex-chips"><span>30년 원장 1:1 시술</span><span>남성 커트 8,000원</span><span>중년 볼륨파마</span><span>스타일북 연동</span></div>
+        <p class="ex-foot">📍 천안 성정동 · <b>가격표를 목소리로 안내</b></p>
+      </a>
+
+      <a class="exhibit" href="https://a90915719-hue.github.io/signal-ai/" target="_blank" rel="noopener">
+        <div class="ex-top">
+          <span class="ex-no">3</span>
+          <div class="ex-title">
+            <b>국민 AI 신호등</b>
+            <span>시니어·어린이 생활/긴급 안내 + 음성 기억장</span>
+          </div>
+          <span class="ex-go">체험 ↗</span>
+        </div>
+        <div class="ex-chips"><span>신호등 3색 안내</span><span>긴급 119·112</span><span>음성 기억장</span><span>정부 무료 집수리</span></div>
+        <p class="ex-foot">📍 전국 누구나 · <b>가입·설치 없이 손가락 하나로</b></p>
+      </a>
+
+      <a class="exhibit" href="https://a90915719-hue.github.io/ai-samples/" target="_blank" rel="noopener">
+        <div class="ex-top">
+          <span class="ex-no">4</span>
+          <div class="ex-title">
+            <b>업종별 맞춤 샘플</b>
+            <span>펜션·호텔 8곳 예시 모음</span>
+          </div>
+          <span class="ex-go">체험 ↗</span>
+        </div>
+        <div class="ex-chips"><span>태안·천안 8곳</span><span>객실·요금 안내</span><span>전화 예약 연결</span><span>업종별로 다시 제작</span></div>
+        <p class="ex-foot">📍 펜션·호텔 · <b>사장님 업종에 맞춰 새로 만드는 방식</b></p>
+      </a>
+
+    </div>
+    <p class="note">모든 사례는 실제로 동작하는 사이트입니다 · 음성은 버튼을 눌렀을 때만 나옵니다</p>
+  </div>
+
+  <div class="sec">
+    <div class="sec-head">
+      <p class="eb">WHY</p>
+      <h2>이렇게 만들어 드립니다</h2>
+    </div>
+    <div class="pitch">
+      <div class="row"><div class="ico">🎭</div><div class="tx"><b>목소리·성별·말투까지 맞춤.</b> 친절한 여성 비서, 차분한 남성 비서처럼 사장님이 원하시는 스타일로 만들어 드립니다.</div></div>
+      <div class="row"><div class="ico">🔊</div><div class="tx"><b>글씨가 작아 못 읽는 손님도 그냥 들으시면 됩니다.</b> 손님이 버튼을 누르면 AI 비서가 목소리로 친절하게 안내합니다.</div></div>
+      <div class="row"><div class="ico">💸</div><div class="tx"><b>서버·AI 사용료 0원.</b> 휴대폰 브라우저 기본 기능만 써서 서버비도, AI 사용료도 나가지 않습니다.</div></div>
+      <div class="row manage"><div class="ico">🧰</div><div class="tx"><b>사진·요금·공지 수정까지 홈페이지 관리도 해드립니다.</b> 새 요금표, 새 사진, 공지 올리기까지 저희가 대신합니다. 업종·규모별 맞춤 견적, 초기 부담 없는 월 관리형으로 상담해 드립니다.</div></div>
+    </div>
+  </div>
+
+  <div class="sec contact-sec">
+    <div class="sec-head">
+      <p class="eb">CONTACT · 제작 문의</p>
+      <h2>사장님 사이트도 만들어 드릴까요?</h2>
+    </div>
+    <div class="contact">
+      <p class="ct">제작자 양철배 대표에게 바로 연락하기</p>
+      <p class="cs">업종·규모별 맞춤 견적 · <b>초기 부담 없는 월 관리형 상담 가능</b></p>
+      <a class="cbtn kakaoc" id="kakaoBtn" href="https://qr.kakao.com/talk/i5Owia7P_L48dp7IxoxgLOu_SuE-">🟡 카카오톡으로 문의하기</a>
+      <p class="kakao-fallback" id="kakaoNote" hidden></p>
+      <p class="kakao-id">카톡 ID: <b>yang3919</b></p>
+      <a class="cbtn callc" href="tel:01090915719">📞 제작 문의 전화</a>
+      <a class="cbtn smsc" href="sms:01090915719">💬 문자 보내기</a>
+    </div>
+    <p class="note">전화·문자 모두 010-9091-5719 로 연결됩니다 · 상담은 무료입니다</p>
+  </div>
+
+  <footer>
+    <p class="made">2027년형 말하는 웹사이트 AI 비서 통합 전시장<span>1인기업 양철배 · 010-9091-5719</span></p>
+    <p class="finem">이 페이지는 제작 사례를 보여 드리기 위한 전시장이며, 검색에 노출되지 않도록 설정되어 있습니다. 사례 사이트의 가격·연락처는 각 업체의 실제 안내입니다.</p>
+  </footer>
+
+</div>
+
+<script>
+(function(){
+  /* ── 전시장 안내 문구: 실제 사례 4종 소개 ── */
+  var INTRO = '안녕하세요. 1인기업 양철배의 2027년형 웹사이트 AI 비서 통합 전시장입니다. 아직도 밋밋한 사이트로 장사 잘 되기를 기다리고 계십니까? 세월의 흐름에 올라타세요. 사장님 업종에 딱 맞는 웹사이트 AI 비서를 만들어 드립니다. 목소리와 성별, 말투까지 맞춤으로 만들고, 홈페이지 관리까지 맡아 드립니다. 지금부터 실제로 만든 네 가지 사례를 소개해 드릴게요. 첫째, 천안 맥가이버 마스터입니다. 에폭시 바닥과 방수, 집수리 현장에서 꼭 챙겨야 할 보험 청구 안내까지 해 주는 AI 비서입니다. 사진 한 장으로 오 분이면 견적이 나오고, 국가 무료 집수리 지원 제도도 알려 드립니다. 둘째, 천안 성정동 여우머리 헤어샵입니다. 삼십 년 경력 원장님이 직접 시술하는 미용실로, 남성 커트 팔천 원부터 가격표를 AI 비서가 목소리로 안내합니다. 셋째, 국민 AI 신호등입니다. 시니어와 어린이가 쓰기 쉽게 신호등 색으로 알려 주고, 위급할 때는 119와 112로 바로 연결합니다. 음성 기억장과 정부 무료 집수리 안내도 들어 있습니다. 넷째, 업종별 맞춤 샘플입니다. 펜션과 호텔 여덟 곳을 사장님 취향에 맞춰 만들어 보았습니다. 카드를 누르면 새 탭에서 직접 말을 걸어 보실 수 있습니다. 제작 문의는 화면 아래 노란 카카오톡 버튼이나 전화로 주세요. 업종과 규모에 맞춰 견적을 내 드리고, 초기 부담 없는 월 관리형으로도 상담해 드립니다. 감사합니다.';
+
+  var synth = window.speechSynthesis || null;
+  var koVoice = null;
+  var listenBtn = document.getElementById('listenBtn');
+  var cardEl = document.getElementById('assistantCard');
+  var frameEl = document.getElementById('avatarFrame');
+  var statusEl = document.getElementById('statusText');
+
+  var speaking = false;      // 음성 안내 재생 중인지
+  var talking = false;       // 입 모양 애니메이션 중인지
+  var speechToken = 0;       // 늦게 도착하는 이벤트 무시용
+  var mouthOpen = false, mouthTimer = null;
+  var queue = [], qIndex = 0;   // 문장 단위 재생 큐
+  var gapTimer = null, startTimer = null, watchdog = null, lastProgress = 0;
+  var chunkStarted = false, chunkMax = 0;
+  var audioSeen = false, speakStartAt = 0;
+  var MOUTH_MIN = 260, MOUTH_MAX = 380;
+  var IDLE_TEXT = '지금은 쉽니다 · 버튼을 누르면 말씀드려요';
+  var TALK_TEXT = '상냥하게 말씀드리는 중…';
+  var VOICE_FAIL_TEXT = '이 브라우저에서는 소리가 나지 않아요 · 글로 안내해 드립니다';
+
+  function pickVoice(){
+    if(!synth || !synth.getVoices) return;
+    var vs = synth.getVoices() || [];
+    koVoice = null;
+    for(var i=0;i<vs.length;i++){
+      if(/^ko([-_]KR)?$/i.test(vs[i].lang)){ koVoice = vs[i]; break; }
+    }
+    if(!koVoice){
+      for(var j=0;j<vs.length;j++){ if((vs[j].lang||'').toLowerCase().indexOf('ko')===0){ koVoice = vs[j]; break; } }
+    }
+  }
+  pickVoice();
+  if(synth){
+    if(typeof synth.onvoiceschanged !== 'undefined'){ synth.onvoiceschanged = pickVoice; }
+  }
+
+  /* ── 입 모양: 기본 미소 ↔ 말하는 입을 사람 말투처럼 천천히 ── */
+  function setMouth(open){
+    if(mouthOpen === open) return;
+    mouthOpen = open;
+    if(frameEl){ frameEl.classList.toggle('mouth-open', open); }
+  }
+
+  function nextMouthFlip(){
+    mouthTimer = setTimeout(function(){
+      if(!talking) return;
+      setMouth(!mouthOpen);
+      if(!mouthOpen && Math.random() < 0.2){
+        mouthTimer = setTimeout(nextMouthFlip, 260 + Math.random()*220);
+        return;
+      }
+      nextMouthFlip();
+    }, MOUTH_MIN + Math.random()*(MOUTH_MAX-MOUTH_MIN));
+  }
+
+  function startMouth(){
+    if(talking) return;
+    talking = true;
+    setMouth(true);
+    nextMouthFlip();
+  }
+
+  function stopMouth(){
+    talking = false;
+    if(mouthTimer){ clearTimeout(mouthTimer); mouthTimer = null; }
+    setMouth(false);
+  }
+
+  /* ── 음성: 긴 문장을 마침표·쉼표 단위로 끊어 차분하게 재생 ── */
+  function splitChunks(text){
+    var out = [], buf = '';
+    for(var i=0;i<text.length;i++){
+      var ch = text.charAt(i);
+      buf += ch;
+      var isEnd = (ch === '.' || ch === '?' || ch === '!');
+      var isComma = (ch === ',');
+      if(!isEnd && !isComma) continue;
+      var prev = text.charAt(i-1), next = text.charAt(i+1);
+      if(isComma && /\d/.test(prev) && /\d/.test(next)) continue;   // 25,000 처럼 숫자 사이 쉼표는 끊지 않는다
+      if(isComma && !/^\s/.test(text.slice(i+1))) continue;
+      var piece = buf.trim();
+      if(piece) out.push(piece);
+      buf = '';
+    }
+    if(buf.trim()) out.push(buf.trim());
+    return out;
+  }
+
+  function clearTimers(){
+    if(gapTimer){ clearTimeout(gapTimer); gapTimer = null; }
+    if(startTimer){ clearTimeout(startTimer); startTimer = null; }
+    if(watchdog){ clearInterval(watchdog); watchdog = null; }
+    if(mouthTimer){ clearTimeout(mouthTimer); mouthTimer = null; }
+  }
+
+  function beginPlaying(){
+    speaking = true;
+    lastProgress = Date.now();
+    if(listenBtn){
+      listenBtn.classList.add('speaking');
+      listenBtn.textContent = '⏹ 음성 멈추기';
+    }
+    if(cardEl){ cardEl.classList.add('speaking'); }
+    if(statusEl){ statusEl.textContent = TALK_TEXT; }
+    if(watchdog){ clearInterval(watchdog); }
+    var token = speechToken;
+    watchdog = setInterval(function(){ watchSpeech(token); }, 500);
+  }
+
+  function watchSpeech(token){
+    if(token !== speechToken || !speaking) return;
+    var now = Date.now();
+    if(!audioSeen && now - speakStartAt > 2600 && !(synth && synth.speaking)){ visualOnly(3200, VOICE_FAIL_TEXT); return; }
+    if(gapTimer){ lastProgress = now; return; }
+    if(synth && synth.speaking){ lastProgress = now; return; }
+    if(!chunkStarted){
+      if(now - lastProgress > 2800){ lastProgress = now; speakChunk(token); }
+      return;
+    }
+    if(now - lastProgress > chunkMax){
+      lastProgress = now;
+      stopMouth();
+      speakChunk(token);
+    }
+  }
+
+  /* 소리를 낼 수 없을 때: 입 모양·상태 문구로만 반응을 보여 주고 조용히 끝낸다 */
+  function visualOnly(ms, msg){
+    speechToken++;
+    var token = speechToken;
+    clearTimers();
+    queue = []; qIndex = 0;
+    if(synth){ try{ synth.cancel(); }catch(e){} }
+    speaking = true;
+    if(listenBtn){ listenBtn.classList.add('speaking'); listenBtn.textContent = '⏹ 그만 듣기'; }
+    if(cardEl){ cardEl.classList.add('speaking'); }
+    if(statusEl){ statusEl.textContent = msg; }
+    startMouth();
+    gapTimer = setTimeout(function(){
+      gapTimer = null;
+      if(token !== speechToken) return;
+      stopSpeech();
+    }, ms);
+  }
+
+  function finishSpeech(){
+    speechToken++;
+    clearTimers();
+    speaking = false; talking = false;
+    setMouth(false);
+    queue = []; qIndex = 0;
+    if(listenBtn){ listenBtn.classList.remove('speaking'); listenBtn.textContent = '🔊 전시장 안내 듣기'; }
+    if(cardEl){ cardEl.classList.remove('speaking'); }
+    if(statusEl){ statusEl.textContent = IDLE_TEXT; }
+  }
+
+  function stopSpeech(){
+    speechToken++;
+    clearTimers();
+    speaking = false; talking = false;
+    setMouth(false);
+    queue = []; qIndex = 0;
+    if(synth){ try{ synth.cancel(); }catch(e){} }
+    if(listenBtn){ listenBtn.classList.remove('speaking'); listenBtn.textContent = '🔊 전시장 안내 듣기'; }
+    if(cardEl){ cardEl.classList.remove('speaking'); }
+    if(statusEl){ statusEl.textContent = IDLE_TEXT; }
+  }
+
+  function speakChunk(token){
+    if(token !== speechToken){ return; }
+    if(qIndex >= queue.length){ finishSpeech(); return; }
+    var chunk = queue[qIndex++];
+    var started = false, ended = false;
+    chunkStarted = false;
+    chunkMax = chunk.length * 260 + 2500;
+    var u;
+    try{
+      u = new SpeechSynthesisUtterance(chunk);
+    }catch(e){
+      visualOnly(3000, VOICE_FAIL_TEXT);
+      return;
+    }
+    u.lang = 'ko-KR';
+    if(koVoice) u.voice = koVoice;
+    u.rate = 0.95;
+    u.pitch = 1;
+    u.volume = 1;
+
+    function startNow(){
+      if(token !== speechToken || started || ended) return;
+      started = true;
+      chunkStarted = true;
+      if(startTimer){ clearTimeout(startTimer); startTimer = null; }
+      lastProgress = Date.now();
+      startMouth();
+    }
+
+    u.onstart = function(){ audioSeen = true; startNow(); };
+    u.onboundary = function(){ audioSeen = true; startNow(); };
+    u.onend = function(){
+      if(token !== speechToken) return;
+      ended = true;
+      if(startTimer){ clearTimeout(startTimer); startTimer = null; }
+      lastProgress = Date.now();
+      stopMouth();   // 문장 사이: 입을 다물고 미소 유지하며 잠깐 쉰다
+      var rest = (qIndex >= queue.length) ? 60 : 180 + Math.random()*70;
+      gapTimer = setTimeout(function(){
+        gapTimer = null;
+        if(token !== speechToken) return;
+        speakChunk(token);
+      }, rest);
+    };
+    u.onerror = function(){
+      if(token !== speechToken) return;
+      ended = true;
+      if(startTimer){ clearTimeout(startTimer); startTimer = null; }
+      lastProgress = Date.now();
+      stopMouth();
+      gapTimer = setTimeout(function(){
+        gapTimer = null;
+        if(token !== speechToken) return;
+        speakChunk(token);
+      }, 150);
+    };
+    try{ synth.speak(u); }catch(e){ /* 아래 안전장치가 넘겨 준다 */ }
+    if(startTimer){ clearTimeout(startTimer); startTimer = null; }
+    startTimer = setTimeout(startNow, 700);   // onstart가 늦거나 오지 않는 브라우저 대비
+  }
+
+  function speak(text){
+    if(!synth || typeof synth.speak !== 'function'){ visualOnly(2800, VOICE_FAIL_TEXT); return; }
+    pickVoice();
+    speechToken++;
+    var token = speechToken;
+    clearTimers();
+    speaking = false; talking = false;
+    audioSeen = false;
+    speakStartAt = Date.now();
+    setMouth(false);
+    if(cardEl){ cardEl.classList.remove('speaking'); }
+    if(listenBtn){ listenBtn.classList.remove('speaking'); listenBtn.textContent = '🔊 전시장 안내 듣기'; }
+    if(statusEl){ statusEl.textContent = IDLE_TEXT; }
+    try{ synth.cancel(); }catch(e){}
+    queue = splitChunks(text);
+    qIndex = 0;
+    if(!queue.length){ visualOnly(2000, VOICE_FAIL_TEXT); return; }
+    beginPlaying();
+    setTimeout(function(){
+      if(token === speechToken){ speakChunk(token); }
+    }, 60);
+  }
+
+  if(listenBtn){
+    listenBtn.addEventListener('click', function(){
+      if(speaking || (synth && synth.speaking)){ stopSpeech(); return; }
+      speak(INTRO);
+    });
+  }
+
+  document.addEventListener('visibilitychange', function(){
+    if(document.hidden) stopSpeech();
+  });
+
+  /* ── 🟡 카카오톡: 새 창 없이 지금 화면에서 바로 이동, 1.2초 뒤에도 그대로면 카톡 ID 자동 복사 안내 ── */
+  var KAKAO_URL = 'https://qr.kakao.com/talk/i5Owia7P_L48dp7IxoxgLOu_SuE-';
+  var KAKAO_ID = 'yang3919';
+  var kakaoBtn = document.getElementById('kakaoBtn');
+  var kakaoNote = document.getElementById('kakaoNote');
+  var kakaoTimer = null, kakaoCopied = false;
+
+  function legacyCopy(text, done){
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.setAttribute('readonly', '');
+    ta.style.position = 'fixed';
+    ta.style.top = '-1000px';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    var ok = false;
+    try{
+      ta.select();
+      ta.setSelectionRange(0, ta.value.length);
+      ok = document.execCommand('copy');
+    }catch(e){ ok = false; }
+    if(ta.parentNode){ ta.parentNode.removeChild(ta); }
+    done(ok);
+  }
+
+  function copyText(text, done){
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(function(){ done(true); }, function(){ legacyCopy(text, done); });
+    } else {
+      legacyCopy(text, done);
+    }
+  }
+
+  function showKakaoFallback(){
+    kakaoTimer = null;
+    if(!kakaoBtn || !kakaoNote || document.hidden) return;
+    function show(ok){
+      kakaoNote.textContent = ok
+        ? "카톡이 바로 안 열리면 크롬/사파리로 열거나 카톡 ID '" + KAKAO_ID + "' (방금 복사됨)로 친구 추가해 주세요!"
+        : "카톡이 바로 안 열리면 크롬/사파리로 열거나 카톡 ID '" + KAKAO_ID + "' 를 길게 눌러 복사해 친구 추가해 주세요!";
+      kakaoNote.hidden = false;
+    }
+    if(kakaoCopied){ show(true); } else { copyText(KAKAO_ID, show); }
+  }
+
+  if(kakaoBtn){
+    kakaoBtn.addEventListener('click', function(e){
+      e.preventDefault();
+      if(kakaoTimer){ clearTimeout(kakaoTimer); }
+      copyText(KAKAO_ID, function(ok){ kakaoCopied = ok; });
+      kakaoTimer = setTimeout(showKakaoFallback, 1200);
+      location.href = KAKAO_URL;
+    });
+  }
+})();
+</script>
+</body>
+</html>
