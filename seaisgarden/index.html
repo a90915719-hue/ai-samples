@@ -240,6 +240,11 @@
   .contact .cnote{margin:1px 0 0;text-align:center;font-size:11.6px;color:var(--sub);letter-spacing:-.1px;line-height:1.5}
   .contact .cnote b{color:var(--ink);letter-spacing:.02em}
   .contact .kakao-id{margin:-4px 0 2px;font-size:12px;font-weight:700;color:#6b5b00}
+  .contact .kakao-fallback{
+    margin:0;padding:9px 10px;border-radius:10px;background:#fff8d6;border:1px solid #efd24a;
+    color:#5b4700;font-size:11.8px;font-weight:700;line-height:1.55;letter-spacing:-.15px;word-break:keep-all;
+  }
+  .contact .kakao-fallback[hidden]{display:none}
   .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
   @media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
 </style>
@@ -318,7 +323,8 @@
     <p class="price manage-price">🧰 업종·규모별 맞춤 견적 · 초기 부담 없는 월 관리형 상담 가능<br><b>(사진·요금·공지 관리 포함)</b></p>
     <div class="contact">
       <p class="ct">제작자 양철배 대표에게 바로 연락하기</p>
-      <a class="cbtn kakaoc" href="https://qr.kakao.com/talk/i5Owia7P_L48dp7IxoxgLOu_SuE-" target="_blank" rel="noopener">🟡 카카오톡 문의</a>
+      <a class="cbtn kakaoc" id="kakaoBtn" href="https://qr.kakao.com/talk/i5Owia7P_L48dp7IxoxgLOu_SuE-">🟡 카카오톡 문의</a>
+      <p class="cnote kakao-fallback" id="kakaoNote" hidden></p>
       <p class="cnote kakao-id">카톡 ID: <b>yang3919</b></p>
       <a class="cbtn callc" href="tel:01090915719">📞 제작 문의 전화</a>
       <a class="cbtn smsc" href="sms:01090915719">💬 문자 보내기</a>
@@ -622,9 +628,9 @@
     }
   }
 
-  function legacyCopy(done){
+  function legacyCopy(text, done){
     var ta = document.createElement('textarea');
-    ta.value = TEL_COPY;
+    ta.value = text;
     ta.setAttribute('readonly', '');
     ta.style.position = 'fixed';
     ta.style.top = '-1000px';
@@ -640,15 +646,53 @@
     done(ok);
   }
 
-  function copyNumber(){
+  function copyText(text, done){
     if(navigator.clipboard && navigator.clipboard.writeText){
-      navigator.clipboard.writeText(TEL_COPY).then(function(){ noteCopied(true); }, function(){ legacyCopy(noteCopied); });
+      navigator.clipboard.writeText(text).then(function(){ done(true); }, function(){ legacyCopy(text, done); });
     } else {
-      legacyCopy(noteCopied);
+      legacyCopy(text, done);
     }
   }
 
+  function copyNumber(){ copyText(TEL_COPY, noteCopied); }
+
   if(copyBtn){ copyBtn.addEventListener('click', copyNumber); }
+
+  /* ── 🟡 카카오톡 문의: 새 창(target=_blank) 대신 지금 화면에서 바로 카톡으로 ──
+     모바일·인앱 브라우저는 새 창에서 intent:// 넘김이 막혀 화면이 멈추므로,
+     같은 탭에서 바로 이동시키고 1.2초 뒤에도 그대로면 카톡 ID를 복사해 안내한다. */
+  var KAKAO_URL = 'https://qr.kakao.com/talk/i5Owia7P_L48dp7IxoxgLOu_SuE-';
+  var KAKAO_ID = 'yang3919';
+  var kakaoBtn = document.getElementById('kakaoBtn');
+  var kakaoNote = document.getElementById('kakaoNote');
+  var kakaoTimer = null, kakaoCopied = false;
+
+  function showKakaoFallback(){
+    kakaoTimer = null;
+    if(!kakaoBtn || !kakaoNote || document.hidden) return;   /* 카톡으로 넘어갔다면 안내할 필요 없음 */
+    if(kakaoCopied){
+      kakaoNote.textContent = "카톡이 바로 안 열리면 크롬/사파리로 열거나 카톡 ID '" + KAKAO_ID + "' (방금 복사됨)로 친구 추가해 주세요!";
+      kakaoNote.hidden = false;
+    } else {
+      copyText(KAKAO_ID, function(ok){
+        kakaoNote.textContent = ok
+          ? "카톡이 바로 안 열리면 크롬/사파리로 열거나 카톡 ID '" + KAKAO_ID + "' (방금 복사됨)로 친구 추가해 주세요!"
+          : "카톡이 바로 안 열리면 크롬/사파리로 열거나 카톡 ID '" + KAKAO_ID + "' 를 길게 눌러 복사해 친구 추가해 주세요!";
+        kakaoNote.hidden = false;
+      });
+    }
+  }
+
+  if(kakaoBtn){
+    kakaoBtn.addEventListener('click', function(e){
+      e.preventDefault();
+      if(kakaoTimer){ clearTimeout(kakaoTimer); }
+      /* 누른 그 순간(사용자 동작 안)에 미리 복사해 두어야 폴백이 사실대로 말할 수 있다 */
+      copyText(KAKAO_ID, function(ok){ kakaoCopied = ok; });
+      kakaoTimer = setTimeout(showKakaoFallback, 1200);
+      location.href = KAKAO_URL;   /* 같은 탭에서 바로 카톡으로 */
+    });
+  }
 
   if(listenBtn){
     listenBtn.addEventListener('click', function(){
