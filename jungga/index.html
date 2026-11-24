@@ -521,7 +521,14 @@
     var started = false, ended = false;
     chunkStarted = false;
     chunkMax = chunk.length * 260 + 2500;
-    var u = new SpeechSynthesisUtterance(chunk);
+    var u;
+    try{
+      u = new SpeechSynthesisUtterance(chunk);
+    }catch(e){
+      // 음성 기능 자체가 없는 브라우저: 말풍선은 이미 떠 있으니 시각 안내만 한다
+      visualOnly(3000, VOICE_FAIL_TEXT);
+      return;
+    }
     u.lang = 'ko-KR';
     if(koVoice) u.voice = koVoice;
     u.rate = 0.95;
@@ -572,7 +579,7 @@
   }
 
   function speak(text){
-    if(!synth){ visualOnly(2800, VOICE_FAIL_TEXT); return; }
+    if(!synth || typeof synth.speak !== 'function'){ visualOnly(2800, VOICE_FAIL_TEXT); return; }
     pickVoice();
     speechToken++;
     var token = speechToken;
