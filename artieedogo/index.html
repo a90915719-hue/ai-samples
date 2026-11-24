@@ -321,6 +321,7 @@
   var mouthOpen = false, mouthTimer = null;
   var queue = [], qIndex = 0;   // 문장 단위 재생 큐
   var gapTimer = null, startTimer = null, watchdog = null, lastProgress = 0;
+  var chunkStarted = false, chunkMax = 0;   // 진행이 멈췄는지 판단하는 데 쓴다
   var MOUTH_MIN = 260, MOUTH_MAX = 380;   // 입을 여닫는 간격(ms)
   var IDLE_TEXT = '지금은 쉽니다 · 버튼을 누르면 말씀드려요';
   var TALK_TEXT = '상냥하게 말씀드리는 중…';
@@ -421,8 +422,13 @@
     var now = Date.now();
     if(gapTimer){ lastProgress = now; return; }
     if(synth && synth.speaking){ lastProgress = now; return; }
-    // 소리는 끝났는데 끝 신호가 오지 않은 경우: 다음 문장으로 넘어간다
-    if(now - lastProgress > 2800){
+    // 소리가 아직 시작되지 않았다: 잠시 기다렸다가 다음 문장으로
+    if(!chunkStarted){
+      if(now - lastProgress > 2800){ lastProgress = now; speakChunk(token); }
+      return;
+    }
+    // 시작은 했는데 끝 신호가 오지 않는다: 문장 길이로 어림한 시간이 지나면 넘어간다
+    if(now - lastProgress > chunkMax){
       lastProgress = now;
       stopMouth();
       speakChunk(token);
@@ -465,6 +471,8 @@
     if(qIndex >= queue.length){ finishSpeech(); return; }
     var chunk = queue[qIndex++];
     var started = false, ended = false;
+    chunkStarted = false;
+    chunkMax = chunk.length * 260 + 2500;
     var u = new SpeechSynthesisUtterance(chunk);
     u.lang = 'ko-KR';
     if(koVoice) u.voice = koVoice;
@@ -475,7 +483,9 @@
     function startNow(){
       if(token !== speechToken || started || ended) return;
       started = true;
+      chunkStarted = true;
       if(startTimer){ clearTimeout(startTimer); startTimer = null; }
+      lastProgress = Date.now();
       startMouth();
     }
 
