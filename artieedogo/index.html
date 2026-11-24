@@ -6,6 +6,8 @@
 <meta name="robots" content="noindex, nofollow">
 <meta name="description" content="아르띠에 도고 사장님께 드리는 '당신만의 웹사이트 AI 비서' 제안용 샘플 페이지입니다.">
 <title>아르띠에 도고 · 말하는 웹사이트 AI 비서 샘플</title>
+<link rel="preload" as="image" href="../assistant.png">
+<link rel="preload" as="image" href="../assistant-talk.png">
 <style>
   :root{
     --accent:#4b3f72;
@@ -67,7 +69,7 @@
   }
   section{padding:0 18px}
   .card{background:var(--card);border-radius:18px;box-shadow:0 3px 16px rgba(0,0,0,.06)}
-  .hook{margin:-6px 18px 0;padding:16px 16px 15px;border-radius:18px;background:#fff;border:1px solid rgba(0,0,0,.07);box-shadow:0 4px 16px rgba(0,0,0,.06)}
+  .hook{margin:14px 18px 0;padding:16px 16px 15px;border-radius:18px;background:#fff;border:1px solid rgba(0,0,0,.07);box-shadow:0 4px 16px rgba(0,0,0,.06)}
   .hook p{margin:0;font-size:14.6px;line-height:1.72;letter-spacing:-.35px;color:#3a3a40;text-align:center;font-weight:600}
   .hook p b{color:var(--accent2);font-weight:900}
   .diagnosis{margin-top:14px;padding:0 18px}
@@ -75,7 +77,6 @@
   .dlabel{font-size:11.5px;font-weight:800;letter-spacing:.02em;color:var(--accent2);margin-bottom:7px}
   .diagnosis p{margin:0;font-size:14.3px;line-height:1.68;letter-spacing:-.25px;color:#33333a}
   .diagnosis p.dfix{margin-top:10px;font-weight:800;color:var(--accent);font-size:13.6px}
-  .voice{margin-top:16px;text-align:center}
   .btn-listen{
     width:100%;border:0;border-radius:16px;padding:19px 16px;
     font-size:18.5px;font-weight:800;letter-spacing:-.4px;color:#fff;
@@ -116,11 +117,58 @@
   }
   .bubble-row.bot-row .avatar{width:34px;height:34px;box-shadow:0 1px 5px rgba(0,0,0,.13)}
   .bubble-row.bot-row.greet .avatar{width:64px;height:64px;box-shadow:0 2px 8px rgba(0,0,0,.16)}
-  .speaker{display:flex;align-items:center;justify-content:center;gap:11px;margin-bottom:13px;text-align:left}
-  .speaker .avatar{width:56px;height:56px}
-  .speaker-tx{display:flex;flex-direction:column;line-height:1.35}
-  .speaker-tx b{font-size:14.5px;letter-spacing:-.3px;color:var(--ink)}
-  .speaker-tx span{font-size:12px;color:var(--sub);letter-spacing:-.2px}
+  /* ── 큰 AI 비서 카드 (입 모양 애니메이션) ── */
+  .voice{margin-top:-34px;position:relative;z-index:2;text-align:center}
+  .assistant-card{
+    position:relative;margin:0;padding:22px 16px 16px;
+    background:linear-gradient(180deg,#ffffff 0%,#fbfdfd 100%);
+    border:1px solid rgba(0,0,0,.06);border-radius:28px;
+    box-shadow:0 14px 34px rgba(10,36,44,.16),0 2px 6px rgba(0,0,0,.04);
+    display:flex;flex-direction:column;align-items:center;gap:12px;
+    overflow:hidden;
+  }
+  .assistant-card:before{
+    content:"";position:absolute;left:0;right:0;top:0;height:110px;pointer-events:none;
+    background:linear-gradient(180deg,#6b5c9a22 0%,transparent 100%);
+  }
+  .avatar-stage{position:relative;display:flex;justify-content:center;align-items:center;width:100%}
+  .halo{
+    position:absolute;left:50%;top:50%;width:224px;height:224px;margin:-112px 0 0 -112px;
+    border-radius:50%;opacity:.75;transition:opacity .35s ease;
+    background:radial-gradient(circle,#6b5c9a52 0%,#6b5c9a1c 46%,transparent 72%);
+  }
+  .avatar-frame{
+    position:relative;width:196px;height:196px;border-radius:46px;overflow:hidden;
+    background:#e9ebec;transform-origin:50% 88%;
+    box-shadow:0 10px 26px rgba(12,38,46,.20),0 0 0 6px #fff,0 0 0 7px rgba(0,0,0,.05);
+    animation:breathe 6.5s ease-in-out infinite;
+    transition:box-shadow .35s ease;
+  }
+  .frame-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+  .frame-img.talk{opacity:0;transition:opacity .09s linear}
+  .avatar-frame.mouth-open .frame-img.talk{opacity:1}
+  .ripple{
+    position:absolute;left:50%;top:50%;width:196px;height:196px;margin:-98px 0 0 -98px;
+    border-radius:46px;border:2px solid #6b5c9abb;opacity:0;pointer-events:none;
+  }
+  .speaking .avatar-frame{
+    animation:talkbob 1.15s ease-in-out infinite;
+    box-shadow:0 0 0 6px #fff,0 0 0 7px #6b5c9a66,0 12px 30px rgba(12,38,46,.26),0 0 26px #6b5c9a59;
+  }
+  .speaking .halo{opacity:1;animation:halopulse 1.9s ease-in-out infinite}
+  .speaking .ripple{animation:ripple 2.1s ease-out infinite}
+  @keyframes breathe{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-4px) scale(1.014)}}
+  @keyframes talkbob{0%,100%{transform:translateY(-1px) scale(1.006)}50%{transform:translateY(-5px) scale(1.026)}}
+  @keyframes halopulse{0%,100%{opacity:.55;transform:scale(.96)}50%{opacity:.95;transform:scale(1.06)}}
+  @keyframes ripple{0%{opacity:.55;transform:scale(1)}70%,100%{opacity:0;transform:scale(1.16)}}
+  .assistant-tx{display:flex;flex-direction:column;align-items:center;gap:3px;line-height:1.35;position:relative}
+  .assistant-tx b{font-size:15.5px;letter-spacing:-.35px;color:var(--ink);font-weight:800}
+  .assistant-tx span{font-size:12.4px;color:var(--sub);letter-spacing:-.2px;display:inline-flex;align-items:center;gap:6px}
+  .assistant-tx span:before{content:"";width:6px;height:6px;border-radius:50%;background:#b9bdc2;flex:0 0 auto;transition:background .3s ease}
+  .speaking .assistant-tx span:before{background:#6b5c9a;animation:dot 1.05s ease-in-out infinite}
+  @keyframes dot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.35;transform:scale(.8)}}
+  .assistant-card .btn-listen{margin-top:2px;position:relative}
+  .assistant-card .hint{position:relative}
   .bubble{
     max-width:100%;border-radius:16px;padding:13px 15px;font-size:14.3px;line-height:1.68;
     letter-spacing:-.2px;animation:pop .22s ease-out both;
@@ -182,6 +230,25 @@
     <div class="chips"><span>최대 9인</span><span>도고 스파 30% 할인</span><span>사계절 바베큐 텐트</span><span>넓은 테라스</span></div>
   </header>
 
+  <section class="voice">
+    <div class="assistant-card" id="assistantCard">
+      <div class="avatar-stage">
+        <span class="halo" aria-hidden="true"></span>
+        <div class="avatar-frame" id="avatarFrame">
+          <img class="frame-img base" src="../assistant.png" alt="아르띠에 도고 웹사이트 AI 비서 프로필" width="480" height="480" fetchpriority="high">
+          <img class="frame-img talk" src="../assistant-talk.png" alt="" aria-hidden="true" width="480" height="480">
+        </div>
+        <span class="ripple" aria-hidden="true"></span>
+      </div>
+      <div class="assistant-tx">
+        <b>AI 비서</b>
+        <span id="statusText">지금은 쉽니다 · 버튼을 누르면 말씀드려요</span>
+      </div>
+      <button class="btn-listen" id="listenBtn" type="button">🔊 음성 안내 듣기</button>
+      <p class="hint">버튼을 누를 때만 소리가 나옵니다 · 약 20초</p>
+    </div>
+  </section>
+
   <section class="hook">
     <p>“사장님이 일일이 설명하지 않으셔도,<br><b>웹사이트 AI 비서</b>가 우리 펜션의 모든 것을<br>손님께 쫙 설명해 드립니다.”</p>
   </section>
@@ -193,15 +260,6 @@
       <p class="dfix">→ 당신만의 웹사이트 AI 비서가 바로 해결해 줍니다.</p>
     </div>
   </div>
-
-  <section class="voice">
-    <div class="speaker">
-      <img class="avatar" src="../assistant.png" alt="아르띠에 도고 웹사이트 AI 비서 프로필" width="56" height="56" loading="lazy">
-      <div class="speaker-tx"><b>AI 비서</b><span>아르띠에 도고 안내를 목소리로</span></div>
-    </div>
-    <button class="btn-listen" id="listenBtn" type="button">🔊 음성 안내 듣기</button>
-    <p class="hint">버튼을 누를 때만 소리가 나옵니다 · 약 20초</p>
-  </section>
 
   <section class="qa">
     <h2>자주 묻는 질문</h2>
@@ -247,7 +305,18 @@
   var listenBtn = document.getElementById('listenBtn');
   var questionsEl = document.getElementById('questions');
   var bubblesEl = document.getElementById('bubbles');
-  var speaking = false;
+  var cardEl = document.getElementById('assistantCard');
+  var frameEl = document.getElementById('avatarFrame');
+  var statusEl = document.getElementById('statusText');
+
+  var speaking = false;      // 음성 재생 중인지
+  var talking = false;       // 입 모양 애니메이션 중인지
+  var speechToken = 0;       // 늦게 도착하는 이벤트 무시용
+  var mouthOpen = false;
+  var tickTimer = null, closeTimer = null;
+  var lastBoundary = 0, boundarySeen = false, lastFlip = 0, talkStart = 0;
+  var IDLE_TEXT = '지금은 쉽니다 · 버튼을 누르면 말씀드려요';
+  var TALK_TEXT = '상냥하게 말씀드리는 중…';
 
   function pickVoice(){
     if(!synth || !synth.getVoices) return;
@@ -265,17 +334,84 @@
     if(typeof synth.onvoiceschanged !== 'undefined'){ synth.onvoiceschanged = pickVoice; }
   }
 
+  /* ── 입 모양: 기본 미소 ↔ 말하는 입 교차 ── */
+  function setMouth(open){
+    if(mouthOpen === open) return;
+    mouthOpen = open;
+    if(frameEl){ frameEl.classList.toggle('mouth-open', open); }
+  }
+
+  function startTalking(){
+    if(talking) return;
+    talking = true;
+    talkStart = Date.now();
+    boundarySeen = false; lastBoundary = 0; lastFlip = Date.now();
+    if(cardEl){ cardEl.classList.add('speaking'); }
+    if(statusEl){ statusEl.textContent = TALK_TEXT; }
+    if(tickTimer){ clearInterval(tickTimer); }
+    tickTimer = setInterval(tick, 55);
+  }
+
+  function stopTalking(){
+    talking = false;
+    if(tickTimer){ clearInterval(tickTimer); tickTimer = null; }
+    if(closeTimer){ clearTimeout(closeTimer); closeTimer = null; }
+    setMouth(false);
+    if(cardEl){ cardEl.classList.remove('speaking'); }
+    if(statusEl){ statusEl.textContent = IDLE_TEXT; }
+  }
+
+  function tick(){
+    if(!talking) return;
+    var now = Date.now();
+    // 끝 이벤트가 오지 않을 때를 대비한 안전장치
+    if(synth && !synth.speaking && now - talkStart > 1500){ stopSpeech(); return; }
+    // onboundary가 살아 있으면 그 리듬을 따르고, 없으면 140~220ms로 뻐끔
+    if(boundarySeen && now - lastBoundary < 500) return;
+    if(now - lastFlip >= 140 + Math.random()*80){
+      lastFlip = now;
+      setMouth(!mouthOpen);
+    }
+  }
+
+  function boundaryPulse(){
+    boundarySeen = true;
+    lastBoundary = Date.now();
+    setMouth(true);
+    if(closeTimer){ clearTimeout(closeTimer); }
+    closeTimer = setTimeout(function(){ setMouth(false); }, 100 + Math.random()*90);
+  }
+
+  /* ── 음성 재생/정지 ── */
+  function beginPlaying(){
+    speaking = true;
+    if(listenBtn){
+      listenBtn.classList.add('speaking');
+      listenBtn.textContent = '⏹ 음성 멈추기';
+    }
+    startTalking();
+  }
+
   function stopSpeech(){
+    speechToken++;
     if(synth){ try{ synth.cancel(); }catch(e){} }
     speaking = false;
-    listenBtn.classList.remove('speaking');
-    listenBtn.textContent = '🔊 음성 안내 듣기';
+    if(listenBtn){
+      listenBtn.classList.remove('speaking');
+      listenBtn.textContent = '🔊 음성 안내 듣기';
+    }
+    stopTalking();
   }
 
   function speak(text){
     if(!synth){ alert('이 브라우저에서는 음성 안내를 지원하지 않습니다. 휴대폰 기본 브라우저(크롬·사파리)에서 열어 주세요.'); return; }
     pickVoice();
+    speechToken++;
+    var token = speechToken;
     try{ synth.cancel(); }catch(e){}
+    speaking = false;
+    stopTalking();
+
     var u = new SpeechSynthesisUtterance(text);
     u.lang = 'ko-KR';
     if(koVoice) u.voice = koVoice;
@@ -283,18 +419,28 @@
     u.pitch = 1;
     u.volume = 1;
     u.onstart = function(){
-      speaking = true;
-      listenBtn.classList.add('speaking');
-      listenBtn.textContent = '⏹ 음성 멈추기';
+      if(token !== speechToken) return;
+      beginPlaying();
     };
-    u.onend = u.onerror = function(){ stopSpeech(); };
+    u.onboundary = function(){
+      if(token !== speechToken || !talking) return;
+      boundaryPulse();
+    };
+    u.onend = function(){ if(token !== speechToken) return; stopSpeech(); };
+    u.onerror = function(){ if(token !== speechToken) return; stopSpeech(); };
     synth.speak(u);
+    // onstart가 늦거나 오지 않는 브라우저 대비
+    setTimeout(function(){
+      if(token === speechToken && !talking && synth && synth.speaking){ beginPlaying(); }
+    }, 700);
   }
 
-  listenBtn.addEventListener('click', function(){
-    if(speaking || (synth && synth.speaking)){ stopSpeech(); return; }
-    speak(intro);
-  });
+  if(listenBtn){
+    listenBtn.addEventListener('click', function(){
+      if(speaking || (synth && synth.speaking)){ stopSpeech(); return; }
+      speak(intro);
+    });
+  }
 
   document.addEventListener('visibilitychange', function(){
     if(document.hidden) stopSpeech();
