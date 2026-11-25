@@ -6,15 +6,24 @@
 <title>390px 미리보기(임시 검수용)</title>
 <style>
   html,body{margin:0;background:#222}
-  .frame{width:390px;height:1700px;border:0;display:block;background:#fff;transform-origin:top left;transform:scale(2)}
-  .box{width:780px;height:3400px;overflow:hidden}
+  .box{overflow:hidden}
+  .frame{border:0;display:block;background:#fff;transform-origin:top left}
 </style>
 </head>
 <body>
-<div class="box"><iframe class="frame" id="f"></iframe></div>
+<div class="box" id="box"><iframe class="frame" id="f" src="./c01/"></iframe></div>
 <script>
-  var m = location.search.match(/c=(c\d\d)/);
-  document.getElementById('f').src = './' + (m ? m[1] : 'c01') + '/';
+  var p = new URLSearchParams(location.search);
+  var c = /^c\d\d$/.test(p.get('c') || '') ? p.get('c') : 'c01';
+  var s = parseFloat(p.get('s') || '2');
+  var h = parseInt(p.get('h') || '1600', 10);
+  var f = document.getElementById('f'), box = document.getElementById('box');
+  f.src = './' + c + '/';
+  f.style.width = '390px';
+  f.style.height = h + 'px';
+  f.style.transform = 'scale(' + s + ')';
+  box.style.width = (390 * s) + 'px';
+  box.style.height = (h * s) + 'px';
 </script>
 </body>
 </html>
