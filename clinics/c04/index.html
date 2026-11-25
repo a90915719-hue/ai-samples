@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="미올한의원 (안산) 원장님께 드리는 '말하는 웹사이트 AI 안내 비서' 제안용 시안 페이지입니다.">
+<title>미올한의원 (안산) · AI 안내 비서 (홈페이지 시안 샘플)</title>
+<meta name="theme-color" content="#2e8b57">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<style>
+:root{--c:#2e8b57}
+*{box-sizing:border-box}body{margin:0;font-family:'Malgun Gothic','Apple SD Gothic Neo',sans-serif;background:#f4f6fb;color:#1c2330}
+.wrap{max-width:560px;margin:0 auto;padding:0 14px 90px}.sub,.card,header p,.note{word-break:keep-all}
+.sample{background:#fff7d6;color:#6b5400;font-size:.8rem;text-align:center;padding:7px 10px;border-bottom:1px solid #ecd98a}
+header{padding:16px 4px 6px}header .cat{display:inline-block;background:var(--c);color:#fff;border-radius:99px;padding:3px 12px;font-size:.78rem;font-weight:700}
+header h1{margin:8px 0 2px;font-size:1.55rem}header p{margin:0;color:#5b6577;font-size:.9rem}
+.stage{position:relative;background:linear-gradient(160deg,var(--c),#101a33);border-radius:22px;padding:16px;margin-top:10px;color:#fff;overflow:hidden}
+.live{display:inline-block;background:rgba(255,255,255,.18);border-radius:99px;padding:3px 11px;font-size:.78rem}
+.live.on{background:#ff4d4d}
+.avwrap{position:relative;width:min(70%,260px);aspect-ratio:520/600;margin:10px auto 6px;border-radius:18px;overflow:hidden;cursor:pointer;background:#000}
+.avwrap img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+#avOpen{opacity:0}
+.tap{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.35);font-weight:800;font-size:1.05rem}
+.eq{display:flex;gap:4px;height:26px;align-items:flex-end;justify-content:center;margin:4px 0}
+.eq i{width:6px;background:#fff;border-radius:3px;height:4px;opacity:.85;transition:height .1s}
+.sub{min-height:62px;background:rgba(0,0,0,.45);border-radius:12px;padding:10px 12px;font-size:1.02rem;line-height:1.45;text-align:center;font-weight:700}
+.prog{height:5px;background:rgba(255,255,255,.25);border-radius:3px;margin-top:10px;overflow:hidden}.prog b{display:block;height:100%;width:0;background:#fff}
+.topics{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 0}
+.topics button{border:0;border-radius:14px;background:#fff;color:var(--c);font-weight:800;padding:13px 4px;font-size:.92rem;box-shadow:0 2px 8px rgba(20,30,60,.08);cursor:pointer}
+.topics button.on{background:var(--c);color:#fff}
+.card{background:#fff;border-radius:18px;padding:16px;margin:12px 0;box-shadow:0 2px 8px rgba(20,30,60,.06)}
+.card h2{margin:0 0 8px;font-size:1.1rem}.card ul{margin:0;padding-left:20px;line-height:1.8}
+.row{display:flex;gap:8px;margin-top:10px}
+.btn{flex:1;display:block;text-align:center;border:0;border-radius:14px;padding:14px 8px;font-weight:800;font-size:1rem;text-decoration:none;cursor:pointer}
+.call{background:var(--c);color:#fff}.kakao{background:#fee500;color:#2b2b00}
+.install{background:#101a33;color:#fff;width:100%;margin-top:8px}
+.note{font-size:.78rem;color:#6b7280;line-height:1.5}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(80px);background:#222;color:#fff;border-radius:99px;padding:10px 18px;font-size:.9rem;transition:.3s;z-index:9}
+.toast.show{transform:translateX(-50%) translateY(0)}
+.editable{display:block;background:#fff;border:1px solid #cfe0ff;border-left:5px solid var(--c);border-radius:12px;padding:12px 14px;margin:12px 0 0;font-size:.93rem;font-weight:700;color:#1f3a68;line-height:1.55;word-break:keep-all}
+.for-u{display:inline-block;margin:8px 0 0;background:#eaf1ff;color:#1f3a68;border-radius:10px;padding:6px 11px;font-size:.85rem;font-weight:700;line-height:1.45;word-break:keep-all}
+.hours{margin:10px 0 0;font-size:.86rem;color:#3d4759;line-height:1.5;word-break:keep-all}
+.ios{display:none;background:#eef2ff;border-radius:12px;padding:10px;font-size:.88rem;margin-top:8px}
+</style>
+</head>
+<body>
+<div class="sample">※ 이 페이지는 병원 홈페이지 <b>시안(샘플)</b>입니다. 공식 홈페이지가 아닙니다 · 정보 출처: <a href="https://www.mi-all.co.kr/" target="_blank" rel="noopener">공식 홈페이지</a></div>
+<div class="wrap">
+<header><span class="cat">한의원</span><h1>미올한의원 (안산)</h1><p>경기 안산 단원구 · AI 안내 비서가 먼저 안내해 드립니다</p>
+<p class="for-u">원장님을 위해서 특별히 저희가 신경 써서 만들어 보았습니다.</p>
+</header>
+
+<section class="stage">
+  <span class="live" id="live">AI 안내 비서 대기 중</span>
+  <div class="avwrap" id="av">
+    <img id="avClosed" src="../assets/av_closed.jpg" alt="AI 안내 비서">
+    <img id="avOpen" src="../assets/av_open.jpg" alt="말하는 AI 안내 비서">
+    <div class="tap" id="tap">▶ 터치하면 안내 시작</div>
+  </div>
+  <div class="eq" id="eq"></div>
+  <div class="sub" id="sub">버튼을 눌러 안내를 들어보세요.</div>
+  <div class="prog"><b id="pf"></b></div>
+</section>
+<p class="editable">💡 안내 멘트와 진료 안내는 원장님께서 원하시는 문구로 언제든 자유롭게 변경할 수 있습니다.</p>
+
+<div class="topics" id="topics"></div>
+
+<section class="card"><h2>진료 안내 <small style="font-weight:400;color:#6b7280">(공식 홈페이지 표기)</small></h2><ul><li>맞춤 다이어트</li><li>안면마비·안면비대칭·턱관절</li><li>이명·난청</li><li>흉터·피부 재생</li></ul><p class="hours">진료시간 · 월–금 09:00–20:30 · 토·일·공휴일 09:00–14:00</p></section>
+<section class="card"><h2>오시는 길</h2><div>경기 안산시 단원구 예술대학로 17, 중앙노블레스 빌딩 2층</div>
+  <div class="row"><a class="btn call" href="tel:0314861023">📞 전화 031-486-1023</a><button class="btn kakao" onclick="copyKakao()">💬 카톡 yang3919</button></div>
+  <p class="note">카톡 yang3919는 이 시안의 제작 문의용입니다. 진료 예약은 병원 전화로 해주세요.</p>
+</section>
+<section class="card"><h2>📲 1초 앱 설치</h2>
+  <button class="btn install" id="inst">홈 화면에 앱으로 설치</button>
+  <div class="ios" id="ios">아이폰: 하단 <b>공유 버튼</b> → <b>홈 화면에 추가</b>를 눌러 주세요.</div>
+</section>
+<p class="note">본 시안은 의료광고가 아니며, 진료 결과·후기·비교 표현을 포함하지 않습니다. 진료 내용과 비용은 병원에 직접 문의해 주세요.</p>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+var TOPICS=[{"key": "intro", "label": "AI 비서 인사", "text": "안녕하세요, 미올한의원 (안산) AI 안내 비서입니다. 이 페이지는 미올한의원 (안산)의 홈페이지 시안 샘플입니다. 아래 버튼을 눌러 진료 안내, 오시는 길, 상담 연결을 확인해 보세요."}, {"key": "svc", "label": "진료 안내", "text": "공식 홈페이지에 안내된 진료는 맞춤 다이어트, 안면마비·안면비대칭·턱관절, 이명·난청, 흉터·피부 재생 등입니다. 평일은 저녁 8시 30분까지, 토·일·공휴일은 오후 2시까지 진료합니다. 자세한 내용은 공식 홈페이지나 전화로 확인해 주세요."}, {"key": "map", "label": "오시는 길", "text": "오시는 길은 경기 안산시 단원구 예술대학로 17, 중앙노블레스빌딩 2층입니다. 방문 전에 전화로 진료 시간을 확인하시면 좋습니다."}, {"key": "call", "label": "예약·상담", "text": "예약과 상담은 전화 031-486-1023으로 연결할 수 있습니다. 이 시안 제작 문의는 카카오톡 yang3919로 주세요."}];
+var audio=new Audio(),cur=-1,mouth=null,eqT=null,sents=[];
+var $=function(i){return document.getElementById(i)};
+var eq=$('eq');for(var i=0;i<14;i++){eq.appendChild(document.createElement('i'))}
+var tp=$('topics');
+TOPICS.forEach(function(t,i){if(i==0)return;var b=document.createElement('button');b.textContent=t.label;b.id='tb'+i;b.onclick=function(){play(i)};tp.appendChild(b)});
+var ib=document.createElement('button');ib.textContent='🔁 처음 인사';ib.onclick=function(){play(0)};tp.appendChild(ib);
+function toast(m){var t=$('toast');t.textContent=m;t.classList.add('show');setTimeout(function(){t.classList.remove('show')},2200)}
+function stopFx(){clearInterval(mouth);clearInterval(eqT);$('avOpen').style.opacity=0;[].forEach.call(eq.children,function(e){e.style.height='4px'});$('live').classList.remove('on');$('live').textContent='AI 안내 비서 대기 중'}
+function play(i){
+  cur=i;audio.pause();stopFx();
+  [].forEach.call(tp.children,function(b){b.classList.remove('on')});var tb=$('tb'+i);if(tb)tb.classList.add('on');
+  audio=new Audio(TOPICS[i].key+'.mp3');
+  sents=TOPICS[i].text.split(/(?<=[.!?])\s+/);
+  $('tap').style.display='none';$('sub').textContent=sents[0];
+  audio.onplay=function(){$('live').classList.add('on');$('live').textContent='AI 안내 중';
+    mouth=setInterval(function(){$('avOpen').style.opacity=($('avOpen').style.opacity==1)?0:1},150);
+    eqT=setInterval(function(){[].forEach.call(eq.children,function(e){e.style.height=(4+Math.random()*22)+'px'})},110)};
+  audio.ontimeupdate=function(){if(!audio.duration)return;var r=audio.currentTime/audio.duration;$('pf').style.width=(r*100)+'%';
+    $('sub').textContent=sents[Math.min(sents.length-1,Math.floor(r*sents.length))]};
+  audio.onended=function(){stopFx();$('pf').style.width='100%'};
+  audio.play().catch(function(){toast('화면을 한 번 더 터치해 주세요');$('tap').style.display='flex'});
+}
+$('av').onclick=function(){if(!audio.paused){audio.pause();stopFx()}else if(cur>=0&&audio.currentTime>0&&!audio.ended){audio.play()}else{play(0)}};
+function copyKakao(){var v='yang3919';(navigator.clipboard?navigator.clipboard.writeText(v):Promise.reject()).then(function(){toast('카톡 아이디 yang3919 복사됨')}).catch(function(){prompt('카톡 아이디를 복사하세요',v)})}
+if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('../sw.js').catch(function(){})})}
+var dp=null;window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();dp=e});
+$('inst').onclick=function(){if(dp){dp.prompt();dp=null}else if(/iphone|ipad/i.test(navigator.userAgent)){$('ios').style.display='block'}else{toast('브라우저 메뉴 ⋮ → 앱 설치(홈 화면에 추가)')}};
+if(/iphone|ipad/i.test(navigator.userAgent))$('ios').style.display='block';
+</script>
+</body>
+</html>
